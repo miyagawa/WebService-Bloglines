@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.02;
+$VERSION = 0.04;
 
 use LWP::UserAgent;
 use URI;
@@ -16,7 +16,7 @@ sub new {
     $ua->agent("WebService::Bloglines/$VERSION");
     $ua->credentials("rpc.bloglines.com:80", "Bloglines RPC",
 		     $p{username}, $p{password});
-    bless { %p, ua => $ua}, $class;
+    bless { %p, ua => $ua }, $class;
 }
 
 sub _die {
@@ -84,7 +84,7 @@ sub getitems {
 	$self->_die($res->status_line);
     }
 
-    return WebService::Bloglines::Entries->new($res->content);
+    return WebService::Bloglines::Entries->parse($res->content);
 }
 
 1;
@@ -156,6 +156,15 @@ WebService::Bloglines - Easy-to-use Interface for Bloglines Web Services
       my $itemid      = $item->{bloglines}->{itemid};
   }
 
+  # get all unread items in a single call
+  my @updates = $bloglines->getitems(0);
+  for my $update (@updates) {
+      my $feed = $update->feed();
+      for my $item ($update->items) {
+          ...
+      }
+  }
+
 =head1 DESCRIPTION
 
 WebService::Bloglines priovides you an Object Oriented interface for
@@ -172,7 +181,7 @@ TBD.
 
 =item *
 
-Cacheability using Cache::Cache API.
+Cleaner API to make users free from the difference between OPML and RSS stuff
 
 =item *
 

@@ -28,7 +28,7 @@ $feed = $update->feed();
 
 ok length($feed->{title}), $feed->{title};
 like $feed->{link}, qr!^https?://!, $feed->{link};
-ok $feed->{description}, $feed->{description};
+ok defined($feed->{description}), $feed->{description};
 like $feed->{bloglines}->{siteid}, qr/^\d+$/, "siteid: $feed->{bloglines}->{siteid}";
 ok $feed->{language}, $feed->{language};
 
@@ -47,5 +47,13 @@ $feed = (grep { $_->{BloglinesUnread} == 0 } @feeds)[0];
 eval {
     $bloglines->getitems($feed->{BloglinesSubId});
 };
-like $@, qr/304/, $@
+like $@, qr/304/, $@;
+
+# fetch all in single getitems
+my @updates = $bloglines->getitems(0);
+for my $update (@updates) {
+    ok defined($update->feed->{title}), $update->feed->{title};
+    my $item = ($update->items)[0];
+    ok defined($item->{link}), "link: $item->{link}";
+}
 

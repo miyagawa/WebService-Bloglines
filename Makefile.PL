@@ -6,5 +6,6 @@ WriteMakefile(
 	Test::More => 0.32,
 	LWP => 0,
 	XML::RSS => 0,
+	XML::XPath => 0,
     },
 );
