@@ -27,6 +27,7 @@ sub _parse_xml {
 
     # no XML library used :-)
     my $current_folderid = 0;
+    my $current_folder_unread = 0;
     while ($self->{_xml} =~ m!(</?outline *[^>]*>)!gs) {
 	local $_ = $1;
 	tr/\n//d;
@@ -34,12 +35,15 @@ sub _parse_xml {
 	    my $attr = $self->_parse_attr($1);
 	    $attr->{folderId} = $current_folderid;
 	    push @{$self->{_feeds}}, $attr;
+	    $current_folder_unread += $attr->{BloglinesUnread};
 	} elsif (m!<outline (.*?)>$!) {
 	    my $attr = $self->_parse_attr($1);
 	    next unless $attr->{BloglinesSubId};
 	    $self->{_folders}->{$attr->{BloglinesSubId}} = $attr;
 	    $current_folderid = $attr->{BloglinesSubId};
 	} elsif (m!^</outline>$!) {
+	    $current_folderid and $self->{_folders}->{$current_folderid}->{BloglinesUnread} = $current_folder_unread;
+	    $current_folder_unread = 0;
 	    $current_folderid = 0;
 	} else {
 #	    warn "No match: $_";

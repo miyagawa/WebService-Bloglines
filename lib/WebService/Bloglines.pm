@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.04;
+$VERSION = 0.05;
 
 use LWP::UserAgent;
 use URI;
@@ -125,6 +125,7 @@ WebService::Bloglines - Easy-to-use Interface for Bloglines Web Services
   my @folders = $subscription->folders();
   for my $folder (@folders) {
       my $title  = $folder->{title};  # title of the folder
+      my $unread = $folder->{BloglinesUnread}; # number of unread items
       my $subid  = $folder->{BloglinesSubId};  # Bloglines SubId
       my $ignore = $folder->{BloglinesIgnore}; # flag to ignore update
       my @feeds  = $subscription->feeds_in_folder($subid);

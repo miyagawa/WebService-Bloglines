@@ -1,5 +1,9 @@
 Revision history for Perl extension WebService::Bloglines
 
+0.05  Tue Feb 15 23:08:23 JST 2005
+	- Added BloglinesUnread in each folder of Subscriptions
+	  (Thanks to Gosuke Miyashita)
+
 0.04  Sat Jan 15 21:09:35 JST 2005
 	- $update->items returns arrayref in scalar context. It still
 	  returns array in a list context.
