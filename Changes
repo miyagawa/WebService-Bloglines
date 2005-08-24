@@ -1,5 +1,8 @@
 Revision history for Perl extension WebService::Bloglines
 
+0.07  Wed Aug 24 22:34:20 UTC 2005
+        - uses LibXML everywhere, removed XML::XPath and XML::RSS dependency
+
 0.06  Wed Aug 24 22:15:21 UTC 2005
         - handle '304 No Change' as no updates, not fatal error
           (Thanks to Ben Trott)
