@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.05;
+$VERSION = 0.06;
 
 use LWP::UserAgent;
 use URI;
@@ -80,6 +80,10 @@ sub getitems {
 
     my $res  = $self->_request("http://rpc.bloglines.com/getitems", %param);
 
+    # 304 means no updates
+    return if $res->code == 304;
+
+    # otherwise, something bad is happened
     unless ($res->code == 200) {
 	$self->_die($res->status_line);
     }

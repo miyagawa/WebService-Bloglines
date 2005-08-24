@@ -1,5 +1,9 @@
 Revision history for Perl extension WebService::Bloglines
 
+0.06  Wed Aug 24 22:15:21 UTC 2005
+        - handle '304 No Change' as no updates, not fatal error
+          (Thanks to Ben Trott)
+
 0.05  Tue Feb 15 23:08:23 JST 2005
 	- Added BloglinesUnread in each folder of Subscriptions
 	  (Thanks to Gosuke Miyashita)
