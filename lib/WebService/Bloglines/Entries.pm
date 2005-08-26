@@ -1,18 +1,17 @@
 package WebService::Bloglines::Entries;
 
 use vars qw($VERSION);
-$VERSION = 0.08;
+$VERSION = 0.09;
 
 use strict;
 use XML::RSS::LibXML;
 use XML::LibXML;
-use HTML::Entities;
 
 sub parse {
     my($class, $xml) = @_;
 
     # temporary workaround till Bloglines fixes this bug
-    $xml =~ s!<webMaster>(.*?)</webMaster>!HTML::Entities::encode($1)!eg;
+    $xml =~ s!<webMaster>(.*?)</webMaster>!encode_xml($1)!eg;
 
     my $parser = XML::LibXML->new;
     my $doc    = $parser->parse_string($xml);
@@ -28,6 +27,17 @@ sub parse {
 	push @entries, $class->new($xml);
     }
     return wantarray ? @entries : $entries[0];
+}
+
+my %Map = ('&' => '&amp;', '"' => '&quot;',
+           '<' => '&lt;', '>' => '&gt;',
+           '\'' => '&apos;');
+my $RE  = join '|', keys %Map;
+
+sub encode_xml {
+    my $str = shift;
+    $str =~ s!($RE)!$Map{$1}!g;
+    $str;
 }
 
 sub new {
