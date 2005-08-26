@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.07;
+$VERSION = 0.08;
 
 use LWP::UserAgent;
 use URI;

@@ -1,7 +1,7 @@
 package WebService::Bloglines::Entries;
 
 use vars qw($VERSION);
-$VERSION = 0.07;
+$VERSION = 0.08;
 
 use strict;
 use XML::RSS::LibXML;
@@ -10,6 +10,9 @@ use HTML::Entities;
 
 sub parse {
     my($class, $xml) = @_;
+
+    # temporary workaround till Bloglines fixes this bug
+    $xml =~ s!<webMaster>(.*?)</webMaster>!HTML::Entities::encode($1)!eg;
 
     my $parser = XML::LibXML->new;
     my $doc    = $parser->parse_string($xml);

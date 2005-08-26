@@ -5,6 +5,6 @@ WriteMakefile(
     'PREREQ_PM' => {
 	Test::More => 0.32,
 	LWP => 0,
-	XML::RSS::LibXML => 0,
+	XML::RSS::LibXML => 0.09,
     },
 );
