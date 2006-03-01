@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use 5.8.1;
-our $VERSION = 0.10;
+our $VERSION = '0.10';
 
 use LWP::UserAgent;
 use URI;
