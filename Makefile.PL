@@ -1,4 +1,5 @@
 use ExtUtils::MakeMaker;
+use 5.8.1;
 WriteMakefile(
     'NAME'      => 'WebService::Bloglines',
     'VERSION_FROM' => 'lib/WebService/Bloglines.pm', # finds $VERSION

@@ -44,10 +44,8 @@ for my $item ($update->items) {
 
 # Try non-modified feed
 $feed = (grep { $_->{BloglinesUnread} == 0 } @feeds)[0];
-eval {
-    $bloglines->getitems($feed->{BloglinesSubId});
-};
-like $@, qr/304/, $@;
+my $foo = $bloglines->getitems($feed->{BloglinesSubId});
+is $foo, undef;
 
 # fetch all in single getitems
 my @updates = $bloglines->getitems(0);

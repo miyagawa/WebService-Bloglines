@@ -1,8 +1,8 @@
 package WebService::Bloglines;
 
 use strict;
-use vars qw($VERSION);
-$VERSION = 0.09;
+use 5.8.1;
+our $VERSION = 0.10;
 
 use LWP::UserAgent;
 use URI;

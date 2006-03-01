@@ -4,6 +4,7 @@ use vars qw($VERSION);
 $VERSION = 0.09;
 
 use strict;
+use Encode;
 use XML::RSS::LibXML;
 use XML::LibXML;
 
@@ -12,6 +13,11 @@ sub parse {
 
     # temporary workaround till Bloglines fixes this bug
     $xml =~ s!<webMaster>(.*?)</webMaster>!encode_xml($1)!eg;
+
+    # okay, Bloglines has sometimes include \xEF in their feeds and
+    # that can't be decoded as UTF-8. Trying to fix it by roundtrips
+    $xml = Encode::decode('utf-8', $xml);
+    $xml = Encode::encode('utf-8', $xml);
 
     my $parser = XML::LibXML->new;
     my $doc    = $parser->parse_string($xml);

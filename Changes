@@ -1,5 +1,8 @@
 Revision history for Perl extension WebService::Bloglines
 
+0.10  2006-03-01T10:37:38Z
+        - Workaround for bad UTF-8 sequence in Bloglines XML. YAY!
+
 0.09  Fri Aug 26 07:34:53 UTC 2005
         - Fix bug in 0.08: HTML::Entities::encode() is not good for utf-8 bytes
 
