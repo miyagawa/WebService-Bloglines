@@ -2,7 +2,7 @@ package WebService::Bloglines;
 
 use strict;
 use 5.8.1;
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use LWP::UserAgent;
 use URI;
@@ -17,6 +17,17 @@ sub new {
     $ua->credentials("rpc.bloglines.com:80", "Bloglines RPC",
 		     $p{username}, $p{password});
     bless { %p, ua => $ua }, $class;
+}
+
+sub username    { shift_var('username', @_) }
+sub password    { shift->_var('password', @_) }
+sub use_liberal { shift->_var('use_liberal', @_) }
+
+sub _var {
+    my $self = shift;
+    my $key  = shift;
+    $self->{$key} = shift if @_;
+    $self->{$key};
 }
 
 sub _die {
@@ -88,7 +99,7 @@ sub getitems {
 	$self->_die($res->status_line);
     }
 
-    return WebService::Bloglines::Entries->parse($res->content);
+    return WebService::Bloglines::Entries->parse($res->content, $self->use_liberal);
 }
 
 1;
@@ -105,6 +116,7 @@ WebService::Bloglines - Easy-to-use Interface for Bloglines Web Services
   my $bloglines = WebService::Bloglines->new(
       username => $username,
       password => $password, # password is optional for notify()
+      use_liberal => 1,
   );
 
   # get the number of unread items using Notifer API

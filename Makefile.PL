@@ -7,5 +7,6 @@ WriteMakefile(
 	Test::More => 0.32,
 	LWP => 0,
 	XML::RSS::LibXML => 0.09,
+        XML::Liberal => 0.02,
     },
 );

@@ -4,12 +4,13 @@ use vars qw($VERSION);
 $VERSION = 0.09;
 
 use strict;
+use Carp;
 use Encode;
 use XML::RSS::LibXML;
 use XML::LibXML;
 
 sub parse {
-    my($class, $xml) = @_;
+    my($class, $xml, $liberal) = @_;
 
     # temporary workaround till Bloglines fixes this bug
     $xml =~ s!<webMaster>(.*?)</webMaster>!encode_xml($1)!eg;
@@ -19,7 +20,17 @@ sub parse {
     $xml = Encode::decode('utf-8', $xml);
     $xml = Encode::encode('utf-8', $xml);
 
-    my $parser = XML::LibXML->new;
+    my $parser;
+    if ($liberal) {
+        eval { require XML::Liberal };
+        if ($@) {
+            croak "XML::Liberal is not installed: $@";
+        }
+        $parser = XML::Liberal->new('LibXML');
+    } else {
+        $parser = XML::LibXML->new;
+    }
+
     my $doc    = $parser->parse_string($xml);
     my $rssparent   = $doc->find("/rss")->get_node(0);
     my $channelnode = $doc->find("/rss/channel");
