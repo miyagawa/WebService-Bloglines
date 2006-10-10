@@ -17,8 +17,8 @@ sub parse {
 
     # okay, Bloglines has sometimes include \xEF in their feeds and
     # that can't be decoded as UTF-8. Trying to fix it by roundtrips
-    $xml = Encode::decode('utf-8', $xml);
-    $xml = Encode::encode('utf-8', $xml);
+    $xml = Encode::decode_utf8($xml);
+    $xml = Encode::encode_utf8($xml);
 
     my $parser;
     if ($liberal) {

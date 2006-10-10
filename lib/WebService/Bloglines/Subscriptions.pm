@@ -5,11 +5,7 @@ $VERSION = 0.02;
 
 use strict;
 use HTML::Entities;
-
-use vars qw($HaveEncode);
-BEGIN {
-    eval { require Encode; $HaveEncode = 1 };
-}
+use Encode;
 
 sub new {
     my($class, $xml) = @_;
@@ -56,7 +52,7 @@ sub _parse_attr {
     my %attr;
     while ($attrline =~ s/\s*(\w+)="([^\"]*)"//) {
 	my $value = HTML::Entities::decode($2);
-	$attr{$1} = $HaveEncode ? Encode::decode("utf-8", $value) : $value;
+	$attr{$1} = Encode::decode_utf8($value);
     }
     return \%attr;
 }

@@ -19,7 +19,7 @@ sub new {
     bless { %p, ua => $ua }, $class;
 }
 
-sub username    { shift_var('username', @_) }
+sub username    { shift->_var('username', @_) }
 sub password    { shift->_var('password', @_) }
 sub use_liberal { shift->_var('use_liberal', @_) }
 
