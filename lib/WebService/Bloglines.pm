@@ -13,6 +13,7 @@ use WebService::Bloglines::Subscriptions;
 sub new {
     my($class, %p) = @_;
     my $ua  = LWP::UserAgent->new();
+    $ua->env_proxy;
     $ua->agent("WebService::Bloglines/$VERSION");
     $ua->credentials("rpc.bloglines.com:80", "Bloglines RPC",
 		     $p{username}, $p{password});
