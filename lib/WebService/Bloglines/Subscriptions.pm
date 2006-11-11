@@ -1,7 +1,7 @@
 package WebService::Bloglines::Subscriptions;
 
 use vars qw($VERSION);
-$VERSION = 0.02;
+$VERSION = 0.12;
 
 use strict;
 use HTML::Entities;
