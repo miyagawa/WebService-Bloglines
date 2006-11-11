@@ -1,5 +1,10 @@
 Revision history for Perl extension WebService::Bloglines
 
+0.12  Sun Nov 12 00:18:47 JST 2006
+        - Fixed a bug in $bloglines->username()
+        - Added Encode.pm dependency
+        - Added env_proxy() support
+
 0.11  2006-03-06T01:18:43Z
         - Added use_liberal option to use XML::Liberal to work with bad XML
 
